@@ -1,9 +1,31 @@
-import type { NextPage } from 'next';
+// Fetch products on server side (getStaticProps)
+
+import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 
 import { Title } from 'components/Title';
+import { getProducts } from 'lib/products';
 
-const HomePage: NextPage = () => {
+interface HomepageProps {
+    products: {
+        id: number;
+        title: string;
+    }[];
+}
+
+export const getStaticProps: GetStaticProps<HomepageProps> = async (ctx) => {
+    const products = await getProducts();
+
+    return {
+        props: {
+            products,
+        },
+    };
+};
+
+const HomePage: NextPage<HomepageProps> = ({ products }) => {
+    console.log('[Homepage] render:', products);
+
     return (
         <div>
             <Head>
@@ -12,7 +34,12 @@ const HomePage: NextPage = () => {
 
             <main className="px-6 py-4">
                 <Title>Next Shop</Title>
-                <p>Product to display</p>
+
+                <ul>
+                    {products.map((product) => (
+                        <li key={product.id}>{product.title}</li>
+                    ))}
+                </ul>
             </main>
         </div>
     );
