@@ -12,6 +12,8 @@ const HomePage: NextPage = () => {
 
     useEffect(() => {
         (async () => {
+            console.log('[Homepage] useEffect');
+
             const products = await getProducts();
 
             setProducts(products);

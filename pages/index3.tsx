@@ -1,6 +1,6 @@
-// Fetch products on server side (getStaticProps)
+// Fetch products on server side (getServerSideProps) (production)
 
-import type { GetStaticProps, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 
 import { Title } from 'components/Title';
@@ -13,8 +13,10 @@ interface HomepageProps {
     }[];
 }
 
-export const getStaticProps: GetStaticProps<HomepageProps> = async (ctx) => {
-    console.log('[Homepage] getStaticProps');
+export const getServerSideProps: GetServerSideProps<HomepageProps> = async (
+    ctx
+) => {
+    console.log('[Homepage] getServerSideProps');
 
     const products = await getProducts();
 

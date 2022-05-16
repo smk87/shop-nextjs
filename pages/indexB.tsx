@@ -14,6 +14,8 @@ interface HomepageProps {
 }
 
 export const getStaticProps: GetStaticProps<HomepageProps> = async (ctx) => {
+    console.log('[Homepage] getStaticProps(ISR)');
+
     const products = await getProducts();
 
     return {
