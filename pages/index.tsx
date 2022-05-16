@@ -1,5 +1,3 @@
-// Fetch products on server side (getStaticProps)
-
 import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 
@@ -14,20 +12,17 @@ interface HomepageProps {
 }
 
 export const getStaticProps: GetStaticProps<HomepageProps> = async (ctx) => {
-    console.log('[Homepage] getStaticProps');
-
     const products = await getProducts();
 
     return {
         props: {
             products,
         },
+        revalidate: 5 * 60, // seconds
     };
 };
 
 const HomePage: NextPage<HomepageProps> = ({ products }) => {
-    console.log('[Homepage] render:', products);
-
     return (
         <div>
             <Head>

@@ -1,17 +1,31 @@
-import type { NextPage } from 'next';
+// Fetch products on server side (getStaticProps)
+
+import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 
 import { Title } from 'components/Title';
+import { getProducts } from 'lib/products';
 
-const products = [
-    {
-        id: 1,
-        title: 'Product 1',
-    },
-    { id: 2, title: 'Product 2' },
-];
+interface HomepageProps {
+    products: {
+        id: number;
+        title: string;
+    }[];
+}
 
-const HomePage: NextPage = () => {
+export const getStaticProps: GetStaticProps<HomepageProps> = async (ctx) => {
+    console.log('[Homepage] getStaticProps');
+
+    const products = await getProducts();
+
+    return {
+        props: {
+            products,
+        },
+    };
+};
+
+const HomePage: NextPage<HomepageProps> = ({ products }) => {
     console.log('[Homepage] render:', products);
 
     return (
