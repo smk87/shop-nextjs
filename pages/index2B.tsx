@@ -1,4 +1,4 @@
-// Fetch products on client side using external API (useEffect)
+// Fetch products on client side using internal API (useEffect)
 
 import type { NextPage } from 'next';
 import Head from 'next/head';
@@ -14,7 +14,8 @@ const HomePage: NextPage = () => {
         (async () => {
             console.log('[Homepage] useEffect');
 
-            const products = await getProducts();
+            const response = await fetch('/api/products');
+            const products = await response.json();
 
             setProducts(products);
 
